@@ -47,6 +47,11 @@ class BasicApp(App):
         random_button.bind(on_press=self.randomize_sliders)  # Bind random button to its callback function
         layout.add_widget(random_button)  # Add random button to layout
         
+        # Add Exit button
+        exit_button = Button(text="Exit", size_hint=(None, None), size=(100, 50))  # Create exit button
+        exit_button.bind(on_press=self.exit_app)  # Bind exit button to its callback function
+        layout.add_widget(exit_button)  # Add exit button to layout
+        
         # Display image
         self.image_texture = Texture.create(size=(512, 512))  # Create texture for displaying image
         self.original_image = skd.astronaut()  # Load sample image
@@ -95,6 +100,9 @@ class BasicApp(App):
         buf = img.tobytes()  # Convert PIL Image to bytes
         self.image_texture.blit_buffer(buf, colorfmt='rgb', bufferfmt='ubyte')  # Blit bytes to image texture
         self.image_texture.flip_vertical()  # Flip the image vertically for correct orientation
+    
+    def exit_app(self, instance):
+        App.get_running_app().stop()  # Stop the Kivy application
 
 def modify_colors(image_array, red_factor=1.0, green_factor=1.0, blue_factor=1.0):
     modified_image = image_array.astype(np.float32)  # Convert image array to float32 for modification
